@@ -12,7 +12,10 @@ namespace MoodAnalyser
     {
         ExceptionType type;
         public enum ExceptionType {
-        ENTERED_NULL,ENTERED_EMPTY
+        ENTERED_NULL,ENTERED_EMPTY,
+        NO_SUCH_CLASS,NO_SUCH_METHOD,
+
+
         }
         public MoodAnalysisException()
         { 
