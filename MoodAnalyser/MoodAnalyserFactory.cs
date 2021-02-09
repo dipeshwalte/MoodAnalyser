@@ -9,7 +9,7 @@ namespace MoodAnalyser
     /// <summary>
     /// Create MoodAnalyseMethod to create object of MoodAnalyse Class.
     /// </summary>
-    public class MoodAnalyserFactory
+    public class MoodAnalyserReflector
     {
         public static object CreateMoodAnalyse(string className, string constructorName)
         {
@@ -60,6 +60,22 @@ namespace MoodAnalyser
             }
 
         }
+
+        public static string InvokeAnalyseMethod(string message, string methodName)
+        {
+             try
+                {
+                Type type = Type.GetType("MoodAnalyser.MoodAnalyserClass");
+                object moodAnalyseObject = MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass", message);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object mood = methodInfo.Invoke(moodAnalyseObject, null);
+                return mood.ToString();
+                }
+             catch (NullReferenceException)
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, "Method is Not found");
+                }
+         }
 
     }
 }
