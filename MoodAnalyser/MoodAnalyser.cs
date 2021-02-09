@@ -6,7 +6,7 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserClass
     {
-        string message;
+        public string message;
         public MoodAnalyserClass()
         {
             this.message = "I am so Happy!";

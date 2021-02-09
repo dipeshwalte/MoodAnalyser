@@ -73,5 +73,12 @@ namespace MoodAnalyserTesting
             Assert.AreEqual(expected, mood);
         }
 
+        [Test]
+        public void GivenHappyMessage_WithReflector_ShouldReturnHappy()
+        {
+        
+            string result = MoodAnalyserReflector.SetField("HAPPY", "message");
+            Assert.AreEqual("HAPPY", result);
+        }
     }
 }
