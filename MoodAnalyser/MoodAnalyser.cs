@@ -18,11 +18,27 @@ namespace MoodAnalyser
 
         public string AnalyseMood()
         {
-            if (this.message.ToUpper().Contains("SAD"))
+            try
             {
-                return "SAD";
+                if (this.message == null)
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL, "Null value was passed!");
+                }
+                else if (this.message == string.Empty)
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_EMPTY, "Empty value was passed!");
+                }
+                else if (this.message.ToUpper().Contains("SAD"))
+                {
+                    return "SAD";
+                }
+                return "HAPPY";
             }
-            return "HAPPY";
+            catch(MoodAnalysisException ex) 
+            {
+                return ex.Message;
+            }
+            
         }
     }
 }

@@ -30,5 +30,24 @@ namespace MoodAnalyserTesting
             string output = moodAnalyser.AnalyseMood();
             Assert.AreEqual(expected, output);
         }
+
+        [Test]
+        public void Given_null_Expecting_ErrorMessage()
+        {
+            string expected = "Null value was passed!";
+            moodAnalyser = new MoodAnalyserClass(null);
+            string output = moodAnalyser.AnalyseMood();
+            Assert.AreEqual(expected, output);
+        }
+
+
+        [Test]
+        public void Given_empty_Expecting_ErrorMessage()
+        {
+            string expected = "Empty value was passed!";
+            moodAnalyser = new MoodAnalyserClass("");
+            string output = moodAnalyser.AnalyseMood();
+            Assert.AreEqual(expected, output);
+        }
     }
 }
