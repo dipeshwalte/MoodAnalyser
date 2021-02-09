@@ -6,13 +6,39 @@ namespace MoodAnalyser
 {
     public class MoodAnalyserClass
     {
-        public string AnalyseMood(string message)
+        string message;
+        public MoodAnalyserClass()
         {
-            if (message.ToUpper().Contains("SAD"))
+            this.message = "I am so Happy!";
+        }
+        public MoodAnalyserClass(string message)
+        {
+            this.message = message;
+        }
+
+        public string AnalyseMood()
+        {
+            try
             {
-                return "SAD";
+                if (this.message == null)
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL, "Null value was passed!");
+                }
+                else if (this.message == string.Empty)
+                {
+                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_EMPTY, "Empty value was passed!");
+                }
+                else if (this.message.ToUpper().Contains("SAD"))
+                {
+                    return "SAD";
+                }
+                return "HAPPY";
             }
-            return "HAPPY";
+            catch(MoodAnalysisException ex) 
+            {
+                return ex.Message;
+            }
+            
         }
     }
 }
