@@ -13,6 +13,7 @@ namespace MoodAnalyserTesting
         }
 
         [Test]
+        //1.1
         public void Given_SadMessage_Expecting_Sad()
         {
             string expected = "SAD";
@@ -23,6 +24,7 @@ namespace MoodAnalyserTesting
 
 
         [Test]
+        //1.2
         public void Given_HappyMessage_Expecting_Happy()
         {
             string expected = "HAPPY";
@@ -32,6 +34,7 @@ namespace MoodAnalyserTesting
         }
 
         [Test]
+        //2.1
         public void Given_null_Expecting_ErrorMessage()
         {
             string expected = "Null value was passed!";
@@ -42,6 +45,7 @@ namespace MoodAnalyserTesting
 
 
         [Test]
+        //3.1
         public void Given_empty_Expecting_ErrorMessage()
         {
             string expected = "Empty value was passed!";
@@ -49,14 +53,31 @@ namespace MoodAnalyserTesting
             string output = moodAnalyser.AnalyseMood();
             Assert.AreEqual(expected, output);
         }
-
+        //4.1
         [Test]
         public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject()
         {
             object expected = new MoodAnalyserClass();
             object obj = MoodAnalyserReflector.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
+            object obj2 = MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass");
             expected.Equals(obj);
+            expected.Equals(obj2);
         }
+        //4.2
+        [Test]
+        public void GivenMoodAnalyseImproperClassName_ShouldReturnException()
+        {
+           Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass2", "MoodAnalyserClass"));
+        }
+
+        //4.3
+        [Test]
+        public void GivenMoodAnalyseImproperConstructorName_ShouldReturnException()
+        {
+            Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.CreateMoodAnalyse("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass2"));
+        }
+
+        //5.1
         [Test]
         public void GivenMoodAnalyseClassName_ShouldReturnMoodAnalyseObject_UsingParameterisedConstructor()
         {
@@ -65,12 +86,37 @@ namespace MoodAnalyserTesting
             expected.Equals(obj);
         }
 
+        //5.2
+        [Test]
+        public void GivenMoodAnalyseImproperClassName_UsingParameterisedConstructor_ShouldReturnException()
+        {
+            Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass2", "MoodAnalyserClass","Happy"));
+        }
+
+
+        //5.3
+        [Test]
+        public void GivenMoodAnalyseImproperConstructor_UsingParameterisedConstructor_ShouldReturnException()
+        {
+            Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.CreateMoodAnalyseUsingParameterizedConstructor("MoodAnalyser.MoodAnalyserClass", "MoodAnalyserClass2", "Happy"));
+        }
+
+
+        //6.1
         [Test]
         public void GivenHappyMood_ShouldReturnHappy()
         {
             object expected = "HAPPY";
             string mood = MoodAnalyserReflector.InvokeAnalyseMethod("Happy", "AnalyseMood");
             Assert.AreEqual(expected, mood);
+        }
+
+
+        //6.2
+        [Test]
+        public void GivenWrongMethod_ShouldThrowException()
+        {
+            Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.InvokeAnalyseMethod("Happy", "AnalyseMood2"));
         }
 
         [Test]
@@ -88,9 +134,11 @@ namespace MoodAnalyserTesting
         }
         [Test]
         //7.3
-        public void GivenNullMessage_usingFieldReflector_ShouldReturnHappy()
+        public void GivenNullMessage_usingFieldReflector_ShouldReturnException()
         {
-            Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.SetField(string.Empty, "message2"));    
+          MoodAnalysisException ex = Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.SetField(null, "message"));
+          Assert.AreEqual(ex.Message, "Message should not be null");
+          Assert.AreEqual(ex.type, MoodAnalysisException.ExceptionType.ENTERED_NULL);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MoodAnalyser
     /// <seealso cref="System.Exception" />
     public class MoodAnalysisException : Exception
     {
-        ExceptionType type;
+        public ExceptionType type;
         public enum ExceptionType {
         ENTERED_NULL,ENTERED_EMPTY,
         NO_SUCH_CLASS,NO_SUCH_METHOD,

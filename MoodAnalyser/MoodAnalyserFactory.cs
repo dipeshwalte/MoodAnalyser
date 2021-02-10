@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace MoodAnalyser
 {
@@ -59,7 +60,7 @@ namespace MoodAnalyser
         /// or
         /// Class is Not found
         /// </exception>
-        public static object CreateMoodAnalyseUsingParameterizedConstructor(string className, string constructorName,string message)
+        public static object CreateMoodAnalyseUsingParameterizedConstructor(string className, string constructorName, [Optional] string message)
         {
             Type type = typeof(MoodAnalyserClass);
             if (type.Name.Equals(className) || type.FullName.Equals(className))
@@ -124,7 +125,7 @@ namespace MoodAnalyser
                 FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
                 if (message == null)
                 {
-                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, "Message should not be null");
+                    throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL, "Message should not be null");
                 }
                 field.SetValue(moodAnalyser, message);
                 return moodAnalyser.message;
