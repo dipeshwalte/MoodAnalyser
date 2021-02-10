@@ -74,11 +74,23 @@ namespace MoodAnalyserTesting
         }
 
         [Test]
+        //7.1
         public void GivenHappyMessage_WithReflector_ShouldReturnHappy()
         {
-        
             string result = MoodAnalyserReflector.SetField("HAPPY", "message");
             Assert.AreEqual("HAPPY", result);
+        }
+        [Test]
+        //7.2
+        public void GivenHappyMessage_WithImproperFieldReflector_ShouldThrowException()
+        {
+            Assert.Throws<MoodAnalysisException>(()=>MoodAnalyserReflector.SetField("HAPPY", "message2"));
+        }
+        [Test]
+        //7.3
+        public void GivenNullMessage_usingFieldReflector_ShouldReturnHappy()
+        {
+            Assert.Throws<MoodAnalysisException>(() => MoodAnalyserReflector.SetField(string.Empty, "message2"));    
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MoodAnalyser
     /// Custom exception class for mood analysis
     /// </summary>
     /// <seealso cref="System.Exception" />
-    class MoodAnalysisException : Exception
+    public class MoodAnalysisException : Exception
     {
         ExceptionType type;
         public enum ExceptionType {
